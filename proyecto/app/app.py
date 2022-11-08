@@ -35,9 +35,9 @@ def friends():
     return render_template('friends.html', title="friends")
 
 #functions for login, singup, etc...
-@app.route("/process_login")
+@app.route("/process_login", methods=["POST"])
 def process_login():
-    print(data)
+    print(request)
     return redirect(url_for("home"))
 
 if __name__ == "__main__":
