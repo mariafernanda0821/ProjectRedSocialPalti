@@ -1,0 +1,19 @@
+.profile-container img {
+    width: 100px;
+}
+
+.container {
+    margin-inline-end: 0px;
+    margin-inline-start: 0px;
+}
+
+.profile-header {
+    height: 100vh;
+}
+
+small {
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+}
