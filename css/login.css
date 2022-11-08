@@ -1,0 +1,111 @@
+#form-section1, #form-section2 {
+  margin-bottom: 10px ;
+  background-color: white;
+   padding: 10px;
+}
+#page-section-left {
+    display: none;
+}
+	
+/*pc responsive:  show left logo */
+@media (min-width: 768px) {
+   #page-section-left {
+	display: block;
+	background-color: white;
+	justify-content: center;
+	display: flex;
+   }
+   #page-section-left .logo {
+       border-radius: 5rem 5rem 1rem 1rem;
+       position: fixed;
+       margin-top: 4rem;
+       width: 20rem;
+   }
+
+   .lema {
+			display: none;
+	}
+}
+
+/*logo height responsive*/
+/*FONT SIZE RESPONSIVE */
+/*extra small*/
+		@media (max-width: 575px) {
+  			html {
+    			font-size: 0.8em;
+  			}
+		}
+		/*small width*/
+		@media (min-width: 576px) and (max-width: 767px) {
+  			html {
+    			font-size: 0.85em;
+  			}  
+		}
+
+		/*mid widh*/
+		@media (min-width: 768px) and (max-width: 991px) {
+  			html {
+    			font-size: 0.9em;
+  			}
+		}
+
+		/*large width*/
+		@media (min-width: 992px) and (max-width: 1199px) {
+  			html {	
+    			font-size: 1.1em;
+  			}
+		}
+
+		/*extra lg*/
+		@media (min-width: 1200px) and (max-width: 1399px) {
+  			html {
+    			font-size: 1.22em;
+  			}
+		}
+ 		/* extra extra lg*/
+		@media (min-width: 1400px) {
+  			html {
+    			font-size: 2.2em;
+  			}
+		}
+		#submitregister {
+			margin-top: 2rem;
+		}
+
+/*header*/
+	
+#page-header {
+	background-color: #50C8F2;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+       z-index: 10;
+}
+li {
+	list-style: none;
+}
+
+.containerTitulo {
+	margin-bottom: 0rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.containerTitulo li p {
+        margin-left: 0.6rem;
+	      margin-right: 0.8rem;	      
+        color: #ffffff
+ }
+.containerTitulo li {
+	display: flex;
+	align-items: center;
+}
+
+/*letters in header*/
+.containerTitulo li p:first-child {
+	font-weight: bold;
+	font-size: 2.7em;
+}
+.containerTitulo li p:last-child {
+	font-size: 1.2em;
+}		
