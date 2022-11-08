@@ -41,6 +41,19 @@
     align-items: center;
     padding: 0px 2em;
   }
+  .col-md-2 >i {
+    color:  #50C8F2;
+    font-size: 1.5em;
+}
+.iconMundo > i{
+    color:  #50C8F2;
+    font-size: 1.5em;
+}
+.iconMundo {
+    color:  #50C8F2;
+    font-size: 0.8em;
+}
+
 /* } */
 
 @media screen and (max-width: 425px) {
