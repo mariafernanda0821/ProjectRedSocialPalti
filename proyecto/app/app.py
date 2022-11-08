@@ -37,7 +37,8 @@ def friends():
 #functions for login, singup, etc...
 @app.route("/process_login", methods=["POST"])
 def process_login():
-    print(request)
+    #if request.method == "POST":
+        
     return redirect(url_for("home"))
 
 if __name__ == "__main__":
