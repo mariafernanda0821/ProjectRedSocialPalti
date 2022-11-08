@@ -1,0 +1,65 @@
+/* @media screen and (min-width: 768px) { */
+    .containerSecundario {
+        width: 100%;
+        height: 80%;
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+    .containerConf{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 0.5em;
+    }
+    .containerSelect{
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5em 0px;
+    }
+    .containerSelect{
+        color:black
+    }
+    .containerEditar{
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 0.5em;
+    }
+  .containerHeader{
+    width: 98%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 2em;
+  }
+/* } */
+
+@media screen and (max-width: 425px) {
+
+    .containerSecundario {
+        width: 90%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        
+    }
+    .containerEditar{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0.5em 2em;
+        
+    }
+}
