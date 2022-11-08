@@ -1,0 +1,31 @@
+services:
+    api:
+        container_name: python_flask
+        build: .
+        volumes:
+        - ./:/palti_app
+        working_dir: /palti_app/
+        environment:
+        - FLASK_APP=api.py
+        - FLASK_DEBUG=1
+        command: gunicorn --bind 0.0.0.0:5000 api:app #flask run --host=0.0.0.0
+    
+    webserver:
+        container_name: http_server_reverse_proxy
+        image: nginx:1.23-alpine
+        ports:
+        - 8888:80 
+        environment:
+        - NGINX_HOST=palti_app.com
+        - NGINX_PORT=80
+        volumes:
+        - ./nginx/conf.d/:/etc/nginx/conf.d/
+
+#    mongodb:
+#        container_name: database
+#        image: mongo
+#        volumes:
+#        - mongodata:/data/db
+
+volumes:
+    mongodata:
