@@ -1,0 +1,231 @@
+@media screen and (min-width: 768px) {
+    .headerApp {
+        width: 100%;
+        height: 10%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
+        align-items: center;
+        background-color: #50C8F2;
+        padding: 0px 20px;
+
+    }
+
+    .headerMovil {
+        display: none;
+    }
+
+    .footerMovil {
+        display: none;
+    }
+
+    .containerItem {
+        width: 90%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .containerItemIcono {
+        width: 90%;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        padding: 10px;
+    }
+
+    .containerTitulo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding-left: 5px;
+    }
+
+    .containerTitulo>p {
+        padding-left: 20px;
+        font-size: 0.8em;
+    }
+
+    .containerTitulo>h1 {
+
+        margin: 0px;
+        font-weight: bolder;
+        color: #ffffff;
+    }
+
+    .containerItemIcono>i {
+        margin: 0px 10px;
+        color: #ffffff
+    }
+
+    .footer {
+        width: 100%;
+        height: 5%;
+        padding: 0px 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        background-color: #50C8F2;
+    }
+
+
+    .containerMain {
+        width: 100%;
+        height: 90%;
+        display: grid;
+        grid-template-columns: 15% 70% 15%;
+
+    }
+
+    .navApp {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-rows: 30% 60% 10%;
+        justify-items: center;
+        align-items: center;
+        background-color: #50C8F2;
+
+    }
+
+    .containerImg {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .containerImg>img {
+        width: 50%;
+        height: 50%;
+    }
+
+    .ContainerContent {
+        width: 100%;
+        height: 100%;
+    }
+
+    .containerIdioma {
+        width: 40%;
+
+    }
+
+    .containerIdioma>.form-select {
+        color: #50C8F2;
+        font-weight: bolder;
+        font-size: 1.2em;
+
+    }
+
+    .containerIdioma>.form-select:focus {
+        box-shadow: 0px;
+        outline: 0px;
+        border-color: 0px;
+    }
+
+    .menu {
+        width: 60%;    
+    }
+
+    .containerItemMenu {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1.5em 0px;
+    }
+    .containerItemMenu > p{
+        margin: 0px;
+    }
+    
+    p {
+        color: #ffffff;
+        font-weight: bolder;
+        font-size: 1.2em;
+    }
+
+    i {
+        color: #ffffff;
+        font-size: 1.5em;
+
+    }
+    .ContainerContent{
+        overflow-y: scroll;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .navApp {
+
+        display: none;
+    }
+
+    .headerApp {
+
+        display: none;
+    }
+
+    .containerMain {
+        width: 100%;
+        height: 90%;
+        display: grid;
+        grid-template-columns: 100%;
+
+    }
+
+
+    .headerMovil {
+        width: 100%;
+        display: grid;
+        height: 5%;
+        display: grid;
+        grid-template-columns: 10% 80% 10%;
+        justify-items: center;
+        align-items: center;
+        background-color: #50C8F2;
+        padding: 0px 10px;
+
+    }
+
+    .containerItemIcono>i {
+        margin: 0px 10px;
+        color: #ffffff
+    }
+
+    .containerTitulo>i {
+        margin: 0px 10px;
+        color: #ffffff
+    }
+
+    .footerMovil {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: grid;
+        height: 5%;
+        display: grid;
+        grid-template-columns: 10% 80% 10%;
+        justify-items: center;
+        align-items: center;
+        background-color: #50C8F2;
+        padding: 0px 10px;
+
+    }
+
+    .containerItemIcono>i {
+
+        color: #ffffff
+    }
+}
