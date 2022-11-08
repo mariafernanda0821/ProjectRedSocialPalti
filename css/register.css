@@ -111,4 +111,15 @@ li {
 }
 .containerTitulo li p:last-child {
 	font-size: 1.1em;
+}
+
+/* password meter checker */
+.passwordInput{
+  text-align :center;
+}
+
+.displayBadge {
+    margin-top: 4%; 
+    display: none; 
+    text-align :center;
 }	

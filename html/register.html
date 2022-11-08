@@ -34,7 +34,7 @@
 
 		<form action="" class="formulario" id="registro">
 
-		<div class="row d-flex justify-content-center" id="form-section1">
+		<div class="row mb-4 d-flex justify-content-center" id="form-section1">
 			<div class="col-5">
 							
 				<img  id="vista-userprofile" src="" class="rounded-circle mb-4" style="width: 150px;" alt="Upload your avatar"
@@ -46,7 +46,7 @@
 		</div>
 
 		<div id="form-section2">
-		<div class="row d-flex justify-content-center">
+		<div class="row mb-4 d-flex justify-content-center">
 			<div class="col-6 col-md-4" >
 			<label class="form-control-label" for="user-firstname">Nombres</label>
 			<input class="form-control border border-info" type="text" id="user-firstname" name="user-firstname" aria-label="User name" />
@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		
-		<div class="row d-flex justify-content-center">
+		<div class="row mb-4 d-flex justify-content-center">
 			<div class="col-6 col-md-4" >
 			<label class="form-control-label" for="useremail">Email</label>
 			<input class="form-control border border-info" type="email" id="useremail" name="useremail" />
@@ -66,9 +66,12 @@
 
 			<div class="col-6 col-md-5" >
 			<label class="form-control-label" for="userpasswd">Contraseña</label>
-			<input class="form-control border border-info" type="password" id="userpasswd" name="userpasswd" aria-label="User name" />
+			<input class="form-control border border-info passwordInput" type="password" id="userpasswd" name="userpasswd" aria-label="User name" />
+       		<span id="StrengthDisp" class="badge displayBadge mb-4">Weak</span>
 			</div>
-		<div class="row d-flex justify-content-center">
+		</div>
+
+		<div class="row mb-4 d-flex justify-content-center">
 			<div class="col-6 col-md-4" >
 			<label class="form-control-label" for="userci">CI</label>
 			<input class="form-control border border-info" type="text" id="userci" name="userci" aria-label="CI" />
@@ -89,14 +92,14 @@
 			</div>
 		</div>
 
-		<div class="row d-flex justify-content-center">
+		<div class="row mb-4 d-flex justify-content-center">
 			<div class="col-12 col-md-9">
 			<label class="form-control-label" for="userabout">About me:</label>
 			<textarea class="form-control border border-info" type="text" id="userabout" name="userabout" rows="3"></textarea>
 			</div>
 		</div>
 
-		<div class="row d-flex justify-content-center">
+		<div class="row mb-4 d-flex justify-content-center">
 			
 			<div class="col-6 col-md-4">
 			<label class="form-control-label" for="favoritemusicuser">Favorite Music</label>
