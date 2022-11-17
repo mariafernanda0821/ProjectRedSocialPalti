@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link href="static/css/error_style.css" rel="stylesheet" type="text/css"/>
+    <title>
+        {% block title %} 
+        {% if title %}
+            {{title}}
+        {% else %}
+            Palti
+        {% endif %}
+        {% endblock %}    
+    </title>
+</head>
+<body>
+<div id="container">
+    <h1>
+        Palti: Error
+    </h1>
+    <p>{{ error_message }}</p>
+    <form action="{{ next }}" method="get">
+        <div class="inputs">
+            <input id="next" name="next" type="submit" value="{{texto_boton}}"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>

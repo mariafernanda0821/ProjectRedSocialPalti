@@ -287,7 +287,7 @@ body{
 .panel-social {
     position: relative;
     border-radius: 0 0 4px 4px;
-    top: 50rem;
+    top: .5rem;
 }
 
 .panel-content {
@@ -496,7 +496,7 @@ ul:last-child {
 
 .entry-content blockquote p:before {
     content: "\f10d";
-    color: #999;
+    color: black;
     margin-right: 12px;
     font-family: "FontAwesome";
     font-size: 24px;

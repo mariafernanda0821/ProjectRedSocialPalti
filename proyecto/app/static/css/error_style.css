@@ -1,0 +1,29 @@
+#container {
+  border: 10px solid #50C8F2; /* bronze */
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 5px;
+  font-size: 120%;
+  width: 40rem;
+  text-align: center;
+}
+
+.inputs {
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  margin: 5px;
+}
+
+#next {
+  background-color: #0d6efd;
+  color: white;
+  border-style: none;
+  padding: 0.7rem;
+  border-radius: 5px;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
