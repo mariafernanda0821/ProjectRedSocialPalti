@@ -107,6 +107,12 @@ def logout():
         return redirect(url_for("login"))
     return process_error("No hay sesion de usuario abierta", url_for("login"), "Iniciar Sesion")
 
+@app.route("/chat_messenger", methods=["GET"])
+def chat_messenger():
+    return render_template("chat_messenger.html", title="Palti - Chat Messenger", user_firstname = session["user-firstname"], user_lastname=session["user-lastname"])    
+
+
+#-------------------methods-------------------
 def load_user(form):
     file_path = os.path.join(SITE_ROOT, "data/", form["useremail"])
     if not os.path.isfile(file_path):
