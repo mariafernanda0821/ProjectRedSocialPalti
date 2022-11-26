@@ -389,13 +389,3 @@ ul {
     margin-bottom: 2rem;
     box-shadow: none;
 }
-
-
-/* scroll chatbox messanger, when headers templates is used  */
-.container {
-    overflow-y: scroll;
-}
-
-.person .name-time .name {
- color:  black;
-}

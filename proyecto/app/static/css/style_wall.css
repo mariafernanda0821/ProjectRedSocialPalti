@@ -803,3 +803,7 @@ li.list-group-item:first-child {
 .chat{
     margin-right: 1rem;
 }
+
+.ContainerContent {
+    display: block;
+}

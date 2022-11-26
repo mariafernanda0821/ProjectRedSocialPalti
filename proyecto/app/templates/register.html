@@ -2,19 +2,19 @@
 
 {% block content %}
 <section id="page-section-left" class="col-0 col-md-5 mt-4">
-			<img class="logo" src="../static/imagenes/logo.png">
+			<img class="logo" src="../static/imagenes/logo.png" alt="logo y lemma de la aplicacion Palti" >
 </section>
 
 		<section class="container col-12 col-md-7 mt-5" id="page-section-right">
-		
+
 		<h1 class="formulario-titulo mb-4 d-flex justify-content-center mt-5">{{form_title}}</h1>
 
 		<form action="process_register" method="POST" class="formulario" id="registro">
 
 		<div class="row mb-4 d-flex justify-content-center" id="form-section1">
 			<div class="col-5">
-							
-				<img  id="vista-userprofile" src="" class="rounded-circle mb-4" style="width: 150px;" alt="Upload your avatar"
+
+				<img alt="Subir tu foto de perfil"  id="vista-userprofile" src="" class="rounded-circle mb-4" style="width: 150px;"
   				 />
 
   				<!--<label class="form-label" for="userprofile">Profile</label>-->
@@ -34,7 +34,7 @@
 			<input class="form-control border border-info" type="text" id="user-lastname" name="user-lastname" aria-label="User name" />
 			</div>
 		</div>
-		
+
 		<div class="row mb-4 d-flex justify-content-center">
 			<div class="col-6 col-md-4" >
 			<label class="form-control-label" for="useremail">Email</label>
@@ -76,30 +76,30 @@
 		</div>
 
 		<div class="row mb-4 d-flex justify-content-center">
-			
+
 			<div class="col-6 col-md-4">
 			<label class="form-control-label" for="favoritemusicuser">Favorite Music</label>
-			<input class="form-control border border-info" type="text" id="favoritemusicuser" name="favoritemusicuser" />		
+			<input class="form-control border border-info" type="text" id="favoritemusicuser" name="favoritemusicuser" />
 			</div>
 
 			<div class="col-6 col-md-4">
 			<label class="form-control-label" for="favoritegameuser">Favorite Game</label>
-			<input class="form-control border border-info" type="text" id="favoritegameuser" name="favoritegameuser" />		
+			<input class="form-control border border-info" type="text" id="favoritegameuser" name="favoritegameuser" />
 			</div>
 		</div>
 		<div class="row mb-4 d-flex justify-content-center">
 			<div class="col-6 col-md-4">
 			<label class="form-control-label" for="favoritelanguajeuser">Favorite Languaje</label>
-			<input class="form-control border border-info" type="text" id="favoritelanguajeuser" name="favoritelanguajeuser" />		
+			<input class="form-control border border-info" type="text" id="favoritelanguajeuser" name="favoritelanguajeuser" />
 			</div>
 
 			<div class="col-6 col-md-4">
 			<label class="form-control-label" for="favoritelanguajeuser"> Favorite Color </label>
-			<input class="form-control border border-info" type="text" id="favoritelanguajeuser" name="favoritelanguajeuser" />		
+			<input class="form-control border border-info" type="text" id="favoritelanguajeuser" name="favoritelanguajeuser" />
 			</div>
 
 		</div>
-		
+
 		<!-- boton registro -->
 		<div class="row d-flex justify-content-center">
 			 <button type="submit" class="btn btn-primary btn-block mb-4 col-10 col-md-8">Registrarse</button>

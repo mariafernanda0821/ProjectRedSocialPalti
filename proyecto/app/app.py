@@ -26,10 +26,14 @@ def login():
     server shows them login or home if user is in session
     :return: content of register.html or login.html
     """
+    if 'useremail' in session:
+        return redirect( url_for('home') )
     return render_template('login.html', title="Palti - Login", form_title="Iniciar Sesion", login_or_register_href="register", login_or_register_text="Registrar")
 
 @app.route("/register")
 def register():
+    if 'useremail' in session:
+        return redirect( url_for('home') )
     return render_template('register.html', title="Palti - Register", form_title="Registartse", login_or_register_href="login" ,login_or_register_text="Iniciar Sesion")
 
 @app.route("/home")
@@ -104,13 +108,24 @@ def logout():
     if "useremail" in session:
         #save_current_user()
         session.pop("useremail", None)
+        session.clear()
         return redirect(url_for("login"))
     return process_error("No hay sesion de usuario abierta", url_for("login"), "Iniciar Sesion")
 
 @app.route("/chat_messenger", methods=["GET"])
 def chat_messenger():
-    return render_template("chat_messenger.html", title="Palti - Chat Messenger", user_firstname = session["user-firstname"], user_lastname=session["user-lastname"])    
+    return render_template("chat_messenger.html", title="Palti - Chat Messenger", user_firstname = session["user-firstname"], user_lastname=session["user-lastname"])
 
+
+@app.route("/post_on_wall", methods=["POST"])
+def post_on_wall():
+    print(request)
+
+    user = session.get("user-firstname", None);
+    message = request.form.get("message", None)
+    question =  "Question example"
+
+    return render_template("wallMsg.html", user=user, message=message, question=question )
 
 #-------------------methods-------------------
 def load_user(form):
