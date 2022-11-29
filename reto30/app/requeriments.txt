@@ -2,3 +2,5 @@ Flask==2.2.2
 Flask-PyMongo==2.3.0
 gunicorn
 websockets
+flask-reuploaded
+flask-wtf
