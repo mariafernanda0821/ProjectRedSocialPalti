@@ -2,6 +2,7 @@
 from flask import Flask, render_template, redirect, request, session, url_for, jsonify
 #  image file uploaded
 from flask_uploads import UploadSet, IMAGES, configure_uploads
+ 
 
 import os.path
 from os import listdir
@@ -9,6 +10,18 @@ import json
 from time import time
 import datetime
 import sys
+
+## Importamos el cliente mongo
+from pymongo import MongoClient
+## Establecemos conexión
+client = MongoClient('mongodb://172.17.0.2:27017/')
+## Seleccionamos nuestra base de datos
+db = client.palti
+## Seleccionamos una colección
+#my_coleccion= db.Nombre_Coleccion
+## Operación que realizaremos sobre la colección
+#my_coleccion.Funcion()
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -130,25 +143,51 @@ def post_on_wall():
 #-------------------methods-------------------
 def load_user(form):
     file_path = os.path.join(SITE_ROOT, "data/", form["useremail"])
-    if not os.path.isfile(file_path):
+    newUser = db.get_collection('user')
+    searchUser = newUser.find_one({'useremail': form["useremail"]})
+    print("searchUser", searchUser)
+    if not searchUser :
+        return process_error("Usuario no encontrado", url_for("login"), "Volver a Inicio de Sesion")
+
+    if searchUser["userpasswd"] != form["userpasswd"] :
+        return process_error("Contraseña incorrecta", url_for("login"), "Volver a Inicio de Sesion") 
+
+    """ if not os.path.isfile(file_path) :
         return process_error("Usuario no encontrado", url_for("login"), "Volver a Inicio de Sesion")
     with open(file_path, "r") as f:
         data_user = json.load(f)
     if data_user["userpasswd"] != form["userpasswd"]:
-        return process_error("Contraseña incorrecta", url_for("login"), "Volver a Inicio de Sesion")
+        return process_error("Contraseña incorrecta", url_for("login"), "Volver a Inicio de Sesion") """
+
     session.permanent = True
     app.permanent_session_lifetime = datetime.timedelta(days=5)
-    session["user-firstname"] = data_user["user-firstname"]
-    session["user-lastname"] =  data_user["user-lastname"]
-    session["useremail"] = data_user["useremail"]
-    session["userpasswd"] = data_user["userpasswd"]
-    session["userci"] = data_user["userci"]
-    session["favoritemusicuser"] = data_user["favoritemusicuser"]
-    session["favoritegameuser"] = data_user["favoritegameuser"]
-    session["favoritelanguajeuser"] = data_user["favoritelanguajeuser"]
-    session["userbithdate"] = data_user["userbithdate"]
-    session["usersex"] = data_user["usersex"]
-    session["userabout"] = data_user["userabout"]
+    session["id"] = str(searchUser['_id'])
+    session["user-firstname"] = searchUser["user-firstname"]
+    session["user-lastname"] =  searchUser["user-lastname"]
+    session["useremail"] = searchUser["useremail"]
+    session["userpasswd"] = searchUser["userpasswd"]
+    session["userci"] = searchUser["userci"]
+    session["favoritemusicuser"] = searchUser["favoritemusicuser"]
+    session["favoritegameuser"] = searchUser["favoritegameuser"]
+    session["favoritelanguajeuser"] = searchUser["favoritelanguajeuser"]
+    session["userbithdate"] = searchUser["userbithdate"]
+    session["usersex"] = searchUser["usersex"]
+    session["userabout"] = searchUser["userabout"]
+    session["privacidad"] = searchUser["privacidad"]
+    print(session)
+    # app.permanent_session_lifetime = datetime.timedelta(days=5)
+    # session["user-firstname"] = data_user["user-firstname"]
+    # session["user-lastname"] =  data_user["user-lastname"]
+    # session["useremail"] = data_user["useremail"]
+    # session["userpasswd"] = data_user["userpasswd"]
+    # session["userci"] = data_user["userci"]
+    # session["favoritemusicuser"] = data_user["favoritemusicuser"]
+    # session["favoritegameuser"] = data_user["favoritegameuser"]
+    # session["favoritelanguajeuser"] = data_user["favoritelanguajeuser"]
+    # session["userbithdate"] = data_user["userbithdate"]
+    # session["usersex"] = data_user["usersex"]
+    # session["userabout"] = data_user["userabout"]
+    #session['privacidad'] = data_user['privacidad']
     return redirect(url_for("home"))
 
 def register_user_in_db(form):
@@ -160,22 +199,43 @@ def register_user_in_db(form):
         return process_error("El usuario ya existe", url_for("register"), "Volver a Registro de Usuario")
 
     data_user = {
-       "userprofile" : form["userprofile"],
-       "user-firstname" : form["user-firstname"],
-       "user-lastname" : form["user-lastname"],
-       "useremail" : form["useremail"],
-       "userpasswd" : form["userpasswd"],
-       "userci" : form["userci"],
-       "favoritemusicuser" : form["favoritemusicuser"],
-       "favoritegameuser" : form["favoritegameuser"],
-       "favoritelanguajeuser" : form["favoritelanguajeuser"],
-       "userbithdate" : form["userbithdate"],
-       "usersex" : form["usersex"],
-       "userabout" : form["userabout"]
+        "userprofile" : form["userprofile"],
+        "user-firstname" : form["user-firstname"],
+        "user-lastname" : form["user-lastname"],
+        "useremail" : form["useremail"],
+        "userpasswd" : form["userpasswd"],
+        "userci" : form["userci"],
+        "favoritemusicuser" : form["favoritemusicuser"].split(','),
+        "favoritegameuser" : form["favoritegameuser"].split(','),
+        "favoritelanguajeuser" : form["favoritelanguajeuser"].split(','),
+        "userbithdate" : form["userbithdate"],
+        "usersex" : form["usersex"],
+        "userabout" : form["userabout"],
+        "privacidad" : {
+            "comentarios": True,
+            "sub_comentarios": True,
+            "publicaciones": True,
+            "datos_personales": {
+                "password": False,
+                "ci": False,
+                "nombre": True,
+                "apellido": True,
+                "email": True,
+                "fecha_nacimiento": True,
+                "descripcion_personal": True,
+                "color_favorito": True,
+                "musica_favorito": True,
+                "video_juego_favorito": True,
+                "lenguaje_favorito": True
+            }
+        }
     }
     with open(file_path, "w") as f:
         json.dump(data_user, f)
-
+    user = db.user
+    user.insert_one(data_user).inserted_id
+    
+    #post_id
     session["userprofile"] = form["userprofile"],
     session["user-firstname"] = form["user-firstname"],
     session["user-lastname"] = form["user-lastname"],
@@ -206,7 +266,8 @@ def update_user_from_session():
            "favoritelanguajeuser" : session["favoritelanguajeuser"],
            "userbithdate" : session["userbithdate"],
            "usersex" : session["usersex"],
-           "userabout" : session["userabout"]
+           "userabout" : session["userabout"],
+           "privacidad": session["privacidad"]
         }
         with open(file_path, "w") as f:
             json.dump(data_user, f)
