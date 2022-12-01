@@ -1,0 +1,18 @@
+show dbs
+db
+db.createCollection("Publicacion")
+show collections
+let myDoc = [ {user_id: 27223295, publicacion_id: 1, fecha_creado:"", tipo_privacidad : "private"} ]
+db.Publicacion.insert(myDoc)
+db.Publicacion.find()
+db.Publicacion.find({user_id : 27223295 })
+db.Publicacion.find({user_id : 27223294 })
+db.Publicacion.find({user_id : {$lt : 27223294 }})
+db.Publicacion.find({user_id : {$rt : 27223294 }})
+db.Publicacion.find({user_id : {$gt : 27223294 }})
+db.Publicacion.find({user_id : {$gte : 27223294 }})
+db.Publicacion.find({user_id : {$lte : 27223294 }})
+db.Publicacion.find({user_id : {$lte : 27223295 }})
+db.Publicacion.find({user_id : {$lt : 27223295 }})
+db.Publicacion.find({user_id : {$gt : 27223295 }})
+db.Publicacion.find({user_id : {$gte : 27223295 }})

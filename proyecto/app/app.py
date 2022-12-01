@@ -14,7 +14,7 @@ import sys
 ## Importamos el cliente mongo
 from pymongo import MongoClient
 ## Establecemos conexión
-client = MongoClient('mongodb://172.17.0.2:27017/')
+client = MongoClient('mongodb://mongodb:27017/')
 ## Seleccionamos nuestra base de datos
 db = client.palti
 ## Seleccionamos una colección
@@ -132,16 +132,41 @@ def chat_messenger():
 
 @app.route("/post_on_wall", methods=["POST"])
 def post_on_wall():
+     ''' using  Api fetch.
+      method render template post with message content and send to front
+     '''
     print(request)
 
     user = session.get("user-firstname", None);
     message = request.form.get("message", None)
-    question =  "Question example"
+    question =  "Question example" 
+   #save in db
+   timestamp = time()
+   publicacion = {
+      "_id" : f'{timestamp}{session["useremail"]}',
+      "usuario" : session["useremail"],
+      "fecha_creado" : timestamp,
+      "contenido" : {
+         "texto" : message,
+         "multimedia" : ""
+      },
+      "tipo_privacidad" : "publico"
+    }
+    #save in user document...
+     
+
+    publicacion_db = db.publicacion
+    publicacion_db.insert_one(publicacion).inserted_id
 
     return render_template("wallMsg.html", user=user, message=message, question=question )
 
 #-------------------methods-------------------
 def load_user(form):
+      """
+    It loads data for the given user (identified by email) from the data directory.
+    It looks for a file whose name matches the user email
+    :return: content of the home page (app basic page) if user exists and password is correct
+    """
     file_path = os.path.join(SITE_ROOT, "data/", form["useremail"])
     newUser = db.get_collection('user')
     searchUser = newUser.find_one({'useremail': form["useremail"]})
@@ -230,8 +255,8 @@ def register_user_in_db(form):
             }
         }
     }
-    with open(file_path, "w") as f:
-        json.dump(data_user, f)
+    #with open(file_path, "w") as f:
+    #    json.dump(data_user, f)
     user = db.user
     user.insert_one(data_user).inserted_id
     

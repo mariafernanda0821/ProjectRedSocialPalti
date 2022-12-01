@@ -6,9 +6,9 @@ services:
         - ./:/palti_app
         working_dir: /palti_app/
         environment:
-        - FLASK_APP=app.py
+        - FLASK_APP=wsgi.py
         - FLASK_DEBUG=1
-        command: gunicorn --bind 0.0.0.0:5000 wsgi:app #
+        command: flask run --host=0.0.0.0  #gunicorn --bind 0.0.0.0:5000 wsgi:app #
     
     webserver:
         container_name: http_server_reverse_proxy
