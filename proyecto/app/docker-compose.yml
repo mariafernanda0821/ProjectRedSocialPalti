@@ -6,9 +6,9 @@ services:
         - ./:/palti_app
         working_dir: /palti_app/
         environment:
-        - FLASK_APP=api.py
+        - FLASK_APP=app.py
         - FLASK_DEBUG=1
-        command: gunicorn --bind 0.0.0.0:5000 api:app #flask run --host=0.0.0.0
+        command: gunicorn --bind 0.0.0.0:5000 wsgi:app #
     
     webserver:
         container_name: http_server_reverse_proxy
@@ -21,11 +21,11 @@ services:
         volumes:
         - ./nginx/conf.d/:/etc/nginx/conf.d/
 
-#    mongodb:
-#        container_name: database
-#        image: mongo
-#        volumes:
-#        - mongodata:/data/db
+    mongodb:
+        container_name: database
+        image: mongo:4.4.18
+        volumes:
+        - mongodata:/data/db
 
 volumes:
     mongodata:
