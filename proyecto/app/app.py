@@ -1,7 +1,7 @@
 # flask microframewok
 from flask import Flask, render_template, redirect, request, session, url_for, jsonify
 #  image file uploaded
-from flask_uploads import UploadSet, IMAGES, configure_uploads
+#from flask_uploads import UploadSet, IMAGES, configure_uploads
  
 
 import os.path

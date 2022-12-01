@@ -23,9 +23,16 @@ services:
 
     mongodb:
         container_name: database
-        image: mongo:4.4.18
+        image: mongo:4.2.23
+        #restart: always
+        environment:
+        - MONGO_INITDB_USERNAME=usermongo
+        - MONGO_INITDB_PASSWORD=userpwd
+        - MONGO_INITDB_DATABASE=paltidb
+        ports:
+        - 27017:27017
         volumes:
-        - mongodata:/data/db
+        - ./mongodata/:/data/db
 
 volumes:
-    mongodata:
+    mongodata: {}
