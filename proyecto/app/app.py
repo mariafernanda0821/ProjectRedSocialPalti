@@ -2,7 +2,8 @@
 from flask import Flask, render_template, redirect, request, session, url_for, jsonify
 #  image file uploaded
 #from flask_uploads import UploadSet, IMAGES, configure_uploads
- 
+
+import backend.controladores
 
 import os.path
 from os import listdir
@@ -34,14 +35,7 @@ SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 @app.route("/login", methods=["GET", "POST"])
 @app.route("/", methods=["GET", "POST"])
 def login():
-    """
-    when user acess into webpage domain,
-    server shows them login or home if user is in session
-    :return: content of register.html or login.html
-    """
-    if 'useremail' in session:
-        return redirect( url_for('home') )
-    return render_template('login.html', title="Palti - Login", form_title="Iniciar Sesion", login_or_register_href="register", login_or_register_text="Registrar")
+    aut_login()
 
 @app.route("/register")
 def register():
@@ -136,7 +130,7 @@ def post_on_wall():
     #method render template post with message content and send to front
     user = session.get("user-firstname", None);
     message = request.form.get("message", None)
-    question =  "Question example" 
+    question =  "Question example"
     #save in db
     timestamp = time()
     publicacion = {
@@ -149,7 +143,7 @@ def post_on_wall():
       },
       "tipo_privacidad" : "publico"
     }
-    #save in user document... 
+    #save in user document...
     publicacion_db = db.publicacion
     publicacion_db.insert_one(publicacion).inserted_id
     return render_template("wallMsg.html", user=user, message=message, question=question )
@@ -169,7 +163,7 @@ def load_user(form):
         return process_error("Usuario no encontrado", url_for("login"), "Volver a Inicio de Sesion")
 
     if searchUser["userpasswd"] != form["userpasswd"] :
-        return process_error("Contraseña incorrecta", url_for("login"), "Volver a Inicio de Sesion") 
+        return process_error("Contraseña incorrecta", url_for("login"), "Volver a Inicio de Sesion")
 
     """ if not os.path.isfile(file_path) :
         return process_error("Usuario no encontrado", url_for("login"), "Volver a Inicio de Sesion")
@@ -253,7 +247,7 @@ def register_user_in_db(form):
     #    json.dump(data_user, f)
     user = db.user
     user.insert_one(data_user).inserted_id
-    
+
     #post_id
     session["userprofile"] = form["userprofile"],
     session["user-firstname"] = form["user-firstname"],
