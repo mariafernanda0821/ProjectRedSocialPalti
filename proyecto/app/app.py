@@ -129,20 +129,17 @@ def logout():
 def chat_messenger():
     return render_template("chat_messenger.html", title="Palti - Chat Messenger", user_firstname = session["user-firstname"], user_lastname=session["user-lastname"])
 
-
+    '''
 @app.route("/post_on_wall", methods=["POST"])
 def post_on_wall():
-     ''' using  Api fetch.
-      method render template post with message content and send to front
-     '''
-    print(request)
-
+    # using  Api fetch.
+    #method render template post with message content and send to front
     user = session.get("user-firstname", None);
     message = request.form.get("message", None)
     question =  "Question example" 
-   #save in db
-   timestamp = time()
-   publicacion = {
+    #save in db
+    timestamp = time()
+    publicacion = {
       "_id" : f'{timestamp}{session["useremail"]}',
       "usuario" : session["useremail"],
       "fecha_creado" : timestamp,
@@ -152,25 +149,22 @@ def post_on_wall():
       },
       "tipo_privacidad" : "publico"
     }
-    #save in user document...
-     
-
+    #save in user document... 
     publicacion_db = db.publicacion
     publicacion_db.insert_one(publicacion).inserted_id
-
     return render_template("wallMsg.html", user=user, message=message, question=question )
-
+    '''
 #-------------------methods-------------------
 def load_user(form):
-      """
+    '''
     It loads data for the given user (identified by email) from the data directory.
     It looks for a file whose name matches the user email
     :return: content of the home page (app basic page) if user exists and password is correct
-    """
-    file_path = os.path.join(SITE_ROOT, "data/", form["useremail"])
+    '''
+    #file_path = os.path.join(SITE_ROOT, "data/", form["useremail"])
     newUser = db.get_collection('user')
     searchUser = newUser.find_one({'useremail': form["useremail"]})
-    print("searchUser", searchUser)
+    #print("searchUser", searchUser)
     if not searchUser :
         return process_error("Usuario no encontrado", url_for("login"), "Volver a Inicio de Sesion")
 
