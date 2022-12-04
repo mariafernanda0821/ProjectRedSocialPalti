@@ -7,7 +7,9 @@ logout
 
 """
 from flask import Flask, render_template, redirect, request, session, url_for, jsonify
-from ..helper/process_err import process_error
+from ..helper.process_err import process_error
+from time import time
+import datetime
 from pymongo import MongoClient
 ## Establecemos conexión
 client = MongoClient('mongodb://mongodb:27017/')
@@ -77,8 +79,8 @@ def load_user(form):
     if data_user["userpasswd"] != form["userpasswd"]:
         return process_error("Contraseña incorrecta", url_for("login"), "Volver a Inicio de Sesion") """
 
-    session.permanent = True
-    app.permanent_session_lifetime = datetime.timedelta(days=5)
+    #session.permanent = True
+    #app.permanent_session_lifetime = datetime.timedelta(days=5)
     session["id"] = str(searchUser['_id'])
     session["user-firstname"] = searchUser["user-firstname"]
     session["user-lastname"] =  searchUser["user-lastname"]

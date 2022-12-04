@@ -8,7 +8,7 @@ home
 
 """
 from flask import Flask, render_template, redirect, request, session, url_for, jsonify
-from ..helper/process_err import process_error
+from ..helper.process_err import process_error
 
 
 def aut_home():

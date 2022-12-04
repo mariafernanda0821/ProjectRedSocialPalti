@@ -4,6 +4,8 @@ from flask import Flask, render_template, redirect, request, session, url_for, j
 #from flask_uploads import UploadSet, IMAGES, configure_uploads
 
 from backend.controladores.autenticacion import *
+from backend.controladores.publicacion import *
+
 
 import os.path
 from os import listdir
@@ -81,6 +83,8 @@ def friends():
 #functions for login, singup, etc...
 @app.route("/process_login", methods=["POST"])
 def process_login():
+    session.permanent = True
+    app.permanent_session_lifetime = datetime.timedelta(days=5)
     return aut_process_login()
 
 @app.route("/process_register", methods=["POST"])
