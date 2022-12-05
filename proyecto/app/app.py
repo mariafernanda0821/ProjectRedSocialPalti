@@ -5,7 +5,9 @@ from flask import Flask, render_template, redirect, request, session, url_for, j
 
 from backend.controladores.autenticacion import *
 from backend.controladores.publicacion import *
-
+from backend.controladores.usuario import *
+from backend.controladores.chat import *
+from backend.controladores.amigos import *
 
 import os.path
 from os import listdir
@@ -49,36 +51,11 @@ def home():
 
 @app.route("/editprofile", methods=["GET", "POST"])
 def editprofile():
-    if "useremail" not in session:
-        return process_error("Debes estar registrado e iniciar sesion para usar la app", url_for("login"), "Iniciar Sesion")
-    if request.method == "GET":
-        return render_template('editar/editarUsuario.html', title="Palti - My Profile", user_firstname = session["user-firstname"], user_lastname=session["user-lastname"], session=session)
-    elif request.method == "POST":
-        form = request.form
-        button = form.get('submit', None)
-        if button == "cancel":
-            return redirect(url_for("home"))
-        elif button == "save":
-            session["user-firstname"] = form["user-firstname"]
-            session["user-lastname"] =  form["user-lastname"]
-            session["useremail"] = form["useremail"]
-            session["userpasswd"] = form["userpasswd"]
-            session["userci"] = form["userci"]
-            """session["favoritemusicuser"] = form["favoritemusicuser"]
-            session["favoritegameuser"] = form["favoritegameuser"]
-            session["favoritelanguajeuser"] = form["favoritelanguajeuser"]"""
-            session["userbithdate"] = form["userbithdate"]
-            session["usersex"] = form["usersex"]
-            session["userabout"] = form["userabout"]
-            update_user_from_session()
-            return render_template('editar/editarUsuario.html', title="Palti - My Profile", user_firstname = session["user-firstname"], user_lastname=session["user-lastname"], session=session)
-
+    return usr_editprofile()
 
 @app.route("/friends")
 def friends():
-    if "useremail" not in session:
-        return process_error("Debes estar registrado e iniciar sesion para usar la app", url_for("login"), "Iniciar Sesion")
-    return render_template('friends.html', title="Palti - Friends", user_firstname = session["user-firstname"], user_lastname=session["user-lastname"])
+    return amg_friends()
 
 #functions for login, singup, etc...
 @app.route("/process_login", methods=["POST"])
@@ -89,17 +66,7 @@ def process_login():
 
 @app.route("/process_register", methods=["POST"])
 def process_register():
-    fields = ['userprofile', 'user-firstname', 'user-lastname', 'useremail', 'userpasswd', 'userci', 'favoritemusicuser', 'favoritegameuser', 'favoritelanguajeuser', 'userbithdate', 'usersex']
-    required_fields = ["user-firstname", "user-lastname", "useremail", "userpasswd", "userci"]
-    missing_fields = []
-    form = request.form
-    for field in fields:
-        field_value = form.get(field, None)
-        if field in required_fields and (field_value == None or field_value == ""):
-            missing_fields.append( field )
-    if missing_fields:
-        return "<h1>missing_fields</h1>";
-    return register_user_in_db(form);
+    return aut_process_register()
 
 @app.route("/logout", methods=["GET"])
 def logout():
@@ -107,7 +74,7 @@ def logout():
 
 @app.route("/chat_messenger", methods=["GET"])
 def chat_messenger():
-    return render_template("chat_messenger.html", title="Palti - Chat Messenger", user_firstname = session["user-firstname"], user_lastname=session["user-lastname"])
+    return chat_chat_messenger()
 
     '''
 @app.route("/post_on_wall", methods=["POST"])
@@ -135,92 +102,6 @@ def post_on_wall():
     return render_template("wallMsg.html", user=user, message=message, question=question )
     '''
 #-------------------methods-------------------
-
-
-def register_user_in_db(form):
-    directory  = os.path.join(SITE_ROOT, "data")
-    if not os.path.exists(directory):
-        os.path.makedirs(directory)
-    file_path = os.path.join(SITE_ROOT, "data/", form["useremail"])
-    if os.path.isfile(file_path):
-        return process_error("El usuario ya existe", url_for("register"), "Volver a Registro de Usuario")
-
-    data_user = {
-        "userprofile" : form["userprofile"],
-        "user-firstname" : form["user-firstname"],
-        "user-lastname" : form["user-lastname"],
-        "useremail" : form["useremail"],
-        "userpasswd" : form["userpasswd"],
-        "userci" : form["userci"],
-        "favoritemusicuser" : form["favoritemusicuser"].split(','),
-        "favoritegameuser" : form["favoritegameuser"].split(','),
-        "favoritelanguajeuser" : form["favoritelanguajeuser"].split(','),
-        "userbithdate" : form["userbithdate"],
-        "usersex" : form["usersex"],
-        "userabout" : form["userabout"],
-        "privacidad" : {
-            "comentarios": True,
-            "sub_comentarios": True,
-            "publicaciones": True,
-            "datos_personales": {
-                "password": False,
-                "ci": False,
-                "nombre": True,
-                "apellido": True,
-                "email": True,
-                "fecha_nacimiento": True,
-                "descripcion_personal": True,
-                "color_favorito": True,
-                "musica_favorito": True,
-                "video_juego_favorito": True,
-                "lenguaje_favorito": True
-            }
-        }
-    }
-    #with open(file_path, "w") as f:
-    #    json.dump(data_user, f)
-    user = db.user
-    user.insert_one(data_user).inserted_id
-
-    #post_id
-    session["userprofile"] = form["userprofile"],
-    session["user-firstname"] = form["user-firstname"],
-    session["user-lastname"] = form["user-lastname"],
-    session["useremail"] = form["useremail"],
-    session["userpasswd"] = form["userpasswd"],
-    session["userci"] = form["userci"],
-    session["favoritemusicuser"] = form["favoritemusicuser"],
-    session["favoritegameuser"] = form["favoritegameuser"],
-    session["favoritelanguajeuser"] = form["favoritelanguajeuser"]
-    session["userbithdate"] = form["userbithdate"]
-    session["usersex"] = data_user["usersex"]
-    return redirect(url_for("home"))
-
-def update_user_from_session():
-    directory  = os.path.join(SITE_ROOT, "data")
-    if not os.path.exists(directory):
-        os.path.makedirs(directory)
-    file_path = os.path.join(SITE_ROOT, "data/", session.get("useremail", "") )
-    if os.path.isfile(file_path):
-        data_user = {
-           "user-firstname" : session["user-firstname"],
-           "user-lastname" : session["user-lastname"],
-           "useremail" : session["useremail"],
-           "userpasswd" : session["userpasswd"],
-           "userci" : session["userci"],
-           "favoritemusicuser" : session["favoritemusicuser"],
-           "favoritegameuser" : session["favoritegameuser"],
-           "favoritelanguajeuser" : session["favoritelanguajeuser"],
-           "userbithdate" : session["userbithdate"],
-           "usersex" : session["usersex"],
-           "userabout" : session["userabout"],
-           "privacidad": session["privacidad"]
-        }
-        with open(file_path, "w") as f:
-            json.dump(data_user, f)
-
-def process_error(message, next_page, texto_boton):
-    return render_template("error.html", error_message=message, next=next_page, texto_boton=texto_boton)
 
 if __name__ == "__main__":
     app.run(port=8888, debug=True)

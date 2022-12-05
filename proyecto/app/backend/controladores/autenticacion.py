@@ -55,6 +55,77 @@ def aut_process_login():
         return "<h1>missing_fields</h1>"
     return load_user(form)
 
+def aut_process_register():
+    fields = ['userprofile', 'user-firstname', 'user-lastname', 'useremail', 'userpasswd', 'userci', 'favoritemusicuser', 'favoritegameuser', 'favoritelanguajeuser', 'userbithdate', 'usersex']
+    required_fields = ["user-firstname", "user-lastname", "useremail", "userpasswd", "userci"]
+    missing_fields = []
+    form = request.form
+    for field in fields:
+        field_value = form.get(field, None)
+        if field in required_fields and (field_value == None or field_value == ""):
+            missing_fields.append( field )
+    if missing_fields:
+        return "<h1>missing_fields</h1>";
+    return register_user_in_db(form);
+
+def register_user_in_db(form):
+    directory  = os.path.join(SITE_ROOT, "data")
+    if not os.path.exists(directory):
+        os.path.makedirs(directory)
+    file_path = os.path.join(SITE_ROOT, "data/", form["useremail"])
+    if os.path.isfile(file_path):
+        return process_error("El usuario ya existe", url_for("register"), "Volver a Registro de Usuario")
+
+    data_user = {
+        "userprofile" : form["userprofile"],
+        "user-firstname" : form["user-firstname"],
+        "user-lastname" : form["user-lastname"],
+        "useremail" : form["useremail"],
+        "userpasswd" : form["userpasswd"],
+        "userci" : form["userci"],
+        "favoritemusicuser" : form["favoritemusicuser"].split(','),
+        "favoritegameuser" : form["favoritegameuser"].split(','),
+        "favoritelanguajeuser" : form["favoritelanguajeuser"].split(','),
+        "userbithdate" : form["userbithdate"],
+        "usersex" : form["usersex"],
+        "userabout" : form["userabout"],
+        "privacidad" : {
+            "comentarios": True,
+            "sub_comentarios": True,
+            "publicaciones": True,
+            "datos_personales": {
+                "password": False,
+                "ci": False,
+                "nombre": True,
+                "apellido": True,
+                "email": True,
+                "fecha_nacimiento": True,
+                "descripcion_personal": True,
+                "color_favorito": True,
+                "musica_favorito": True,
+                "video_juego_favorito": True,
+                "lenguaje_favorito": True
+            }
+        }
+    }
+    #with open(file_path, "w") as f:
+    #    json.dump(data_user, f)
+    user = db.user
+    user.insert_one(data_user).inserted_id
+
+    #post_id
+    session["userprofile"] = form["userprofile"],
+    session["user-firstname"] = form["user-firstname"],
+    session["user-lastname"] = form["user-lastname"],
+    session["useremail"] = form["useremail"],
+    session["userpasswd"] = form["userpasswd"],
+    session["userci"] = form["userci"],
+    session["favoritemusicuser"] = form["favoritemusicuser"],
+    session["favoritegameuser"] = form["favoritegameuser"],
+    session["favoritelanguajeuser"] = form["favoritelanguajeuser"]
+    session["userbithdate"] = form["userbithdate"]
+    session["usersex"] = data_user["usersex"]
+    return redirect(url_for("home"))
 
 def load_user(form):
     '''
