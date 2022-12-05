@@ -9,7 +9,6 @@ services:
         - FLASK_APP=wsgi.py
         - FLASK_DEBUG=1
         command: gunicorn --bind 0.0.0.0:5000 wsgi:app #flask run --host=0.0.0.0
-    
     webserver:
         container_name: http_server_reverse_proxy
         image: nginx:1.23-alpine
