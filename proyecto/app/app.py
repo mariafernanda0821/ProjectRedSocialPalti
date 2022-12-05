@@ -30,7 +30,7 @@ import sys
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+#SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 #app.config["UPLOADED_PHOTOS_DEST"] = "uploads"
 
 #photos = UploadSet('userprofile', IMAGES)
@@ -101,7 +101,7 @@ def post_on_wall():
     publicacion_db.insert_one(publicacion).inserted_id
     return render_template("wallMsg.html", user=user, message=message, question=question )
     '''
-#-------------------methods-------------------
+
 
 if __name__ == "__main__":
     app.run(port=8888, debug=True)

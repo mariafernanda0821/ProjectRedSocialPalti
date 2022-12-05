@@ -8,14 +8,21 @@ logout
 """
 from flask import Flask, render_template, redirect, request, session, url_for, jsonify
 from ..helper.process_err import process_error
+import os.path
+import os
+from os import listdir
+import json
 from time import time
 import datetime
+import sys
+
 from pymongo import MongoClient
 ## Establecemos conexión
 client = MongoClient('mongodb://mongodb:27017/')
 ## Seleccionamos nuestra base de datos
 db = client.palti
 
+SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 def aut_login():
      """
@@ -40,7 +47,7 @@ def aut_logout():
         session.pop("useremail", None)
         session.clear()
         return redirect(url_for("login"))
-        return process_error("No hay sesion de usuario abierta", url_for("login"), "Iniciar Sesion")
+    return process_error("No hay sesion de usuario abierta", url_for("login"), "Iniciar Sesion")
 
 
 def aut_process_login():
@@ -52,7 +59,7 @@ def aut_process_login():
         if field == None or field == "":
             missing_fields.append( field )
     if missing_fields:
-        return "<h1>missing_fields</h1>"
+        return process_error("Especifique todos los campos para iniciar sesion", url_for("login"), "Volver a Inicio de Sesion")
     return load_user(form)
 
 def aut_process_register():
@@ -65,13 +72,13 @@ def aut_process_register():
         if field in required_fields and (field_value == None or field_value == ""):
             missing_fields.append( field )
     if missing_fields:
-        return "<h1>missing_fields</h1>";
+        return process_error("Para registrarse, debe indicar por lo menos los campos Nombre, Apellido, correo, contraseña y cedula", url_for("register"), "Volver a Registro de Usuario" )
     return register_user_in_db(form);
 
 def register_user_in_db(form):
     directory  = os.path.join(SITE_ROOT, "data")
     if not os.path.exists(directory):
-        os.path.makedirs(directory)
+        os.makedirs(directory)
     file_path = os.path.join(SITE_ROOT, "data/", form["useremail"])
     if os.path.isfile(file_path):
         return process_error("El usuario ya existe", url_for("register"), "Volver a Registro de Usuario")
