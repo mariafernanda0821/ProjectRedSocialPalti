@@ -17,11 +17,11 @@ import datetime
 import sys
 
 ## Importamos el cliente mongo
-from pymongo import MongoClient
+#from pymongo import MongoClient
 ## Establecemos conexión
-client = MongoClient('mongodb://mongodb:27017/')
+#client = MongoClient('mongodb://mongodb:27017/')
 ## Seleccionamos nuestra base de datos
-db = client.palti
+#db = client.palti
 ## Seleccionamos una colección
 #my_coleccion= db.Nombre_Coleccion
 ## Operación que realizaremos sobre la colección
